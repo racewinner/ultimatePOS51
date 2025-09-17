@@ -123,6 +123,7 @@
 
                 $(document).off('click', 'button.add-multi-pay');
                 $(document).on('click', 'button.add-multi-pay', function (e) {
+                  debugger
                     const transaction_id = $(e.target).data("sell-id");
                     const sell_due_tr = e.target.closest('tr');
 

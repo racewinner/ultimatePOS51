@@ -125,7 +125,7 @@
                     const purchase_due_tr = e.target.closest('tr');
 
                     // To check currency is the same as the selected currency
-                    const currency_symbol = $(purchase_due_tr.querySelector("td:nth-child(6)")).text();
+                    const currency_symbol = $(purchase_due_tr.querySelector("td:nth-child(7)")).text();
                     if (purchase_currency_symbol && purchase_currency_symbol != currency_symbol) {
                         toastr.warning("Could not add transaction with the different currency!");
                         return;
