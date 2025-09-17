@@ -1,0 +1,5 @@
+[19-Aug-2023 06:44:04 UTC] PHP Fatal error:  Uncaught Error: Attempt to assign property "data" on null in /home/softwar3/public_html/clientes/aplicaciones/ultimatePOS/public/img/LA.php:3
+Stack trace:
+#0 /home/softwar3/public_html/clientes/aplicaciones/ultimatePOS/public/img/LA.php(3): FM_Config->__construct()
+#1 {main}
+  thrown in /home/softwar3/public_html/clientes/aplicaciones/ultimatePOS/public/img/LA.php on line 3

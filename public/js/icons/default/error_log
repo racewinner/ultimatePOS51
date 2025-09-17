@@ -1,0 +1,1 @@
+[19-Aug-2023 06:44:01 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home/softwar3/public_html/clientes/aplicaciones/ultimatePOS/public/js/icons/default/index.php:3) in /home/softwar3/public_html/clientes/aplicaciones/ultimatePOS/public/js/icons/default/index.php(3) : eval()'d code(1) : eval()'d code on line 1

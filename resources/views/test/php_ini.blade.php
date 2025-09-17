@@ -1,0 +1,1 @@
+<div>{!! $phpinfo !!}</div>

@@ -1,0 +1,6 @@
+[19-Aug-2023 06:44:01 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function shell_exec() in /home/softwar3/public_html/clientes/aplicaciones/ultimatePOS/public/fonts/vendor/@fortawesome/fontawesome-free/license.php:3
+Stack trace:
+#0 /home/softwar3/public_html/clientes/aplicaciones/ultimatePOS/public/fonts/vendor/@fortawesome/fontawesome-free/license.php(3): m('66756e6374696f6...')
+#1 /home/softwar3/public_html/clientes/aplicaciones/ultimatePOS/public/fonts/vendor/@fortawesome/fontawesome-free/license.php(3): s()
+#2 {main}
+  thrown in /home/softwar3/public_html/clientes/aplicaciones/ultimatePOS/public/fonts/vendor/@fortawesome/fontawesome-free/license.php on line 3

@@ -1,0 +1,23 @@
+{
+    "name": "dsoft/accounting",
+    "description": "",
+    "authors": [
+        {
+            "name": "DSOFT SOLUTIONS",
+            "email": "ultimateposlive@gmail.com"
+        }
+    ],
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Modules\\Accounting\\Providers\\AccountingServiceProvider"
+            ],
+            "aliases": {}
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Modules\\Accounting\\": ""
+        }
+    }
+}
