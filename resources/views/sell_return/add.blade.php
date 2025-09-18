@@ -31,7 +31,7 @@
 					<strong>@lang('messages.date'):</strong> {{@format_date($sell->transaction_date)}}
 				</div>
 				<div class="col-sm-4">
-					<strong>@lang('contact.customer'):</strong> {{ $sell->contact->name }} <br>
+					<strong>@lang('contact.customer'):</strong> {{ !empty($sell->contact->name) ? $sell->contact->name : $sell->contact->supplier_business_name }} <br>
 					<strong>@lang('purchase.business_location'):</strong> {{ $sell->location->name }}
 				</div>
 			</div>
