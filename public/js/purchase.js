@@ -532,11 +532,16 @@ $(document).ready(function() {
         ajax: {
             url: '/purchases',
             data: function(d) {
+              debugger
                 if ($('#purchase_list_filter_location_id').length) {
                     d.location_id = $('#purchase_list_filter_location_id').val();
                 }
                 if ($('#purchase_list_filter_supplier_id').length) {
                     d.supplier_id = $('#purchase_list_filter_supplier_id').val();
+                }
+                if ($('#purchase_list_filter_unsupplier_id').length) {
+                  debugger
+                  d.unsupplier_ids = $('#purchase_list_filter_unsupplier_id').val();
                 }
                 if ($('#purchase_list_filter_payment_status').length) {
                     d.payment_status = $('#purchase_list_filter_payment_status').val();
@@ -636,9 +641,10 @@ $(document).ready(function() {
     $(document).on(
         'change',
         '#purchase_list_filter_location_id, \
-                    #purchase_list_filter_supplier_id, #purchase_list_filter_payment_status,\
+                    #purchase_list_filter_supplier_id, #purchase_list_filter_unsupplier_id, #purchase_list_filter_payment_status,\
                      #purchase_list_filter_status',
         function() {
+          debugger
             purchase_table.ajax.reload();
         }
     );

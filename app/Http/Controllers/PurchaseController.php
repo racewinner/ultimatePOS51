@@ -86,9 +86,12 @@ class PurchaseController extends Controller
             if ($permitted_locations != 'all') {
                 $purchases->whereIn('transactions.location_id', $permitted_locations);
             }
-
-            if (! empty(request()->supplier_id)) {
-                $purchases->where('contacts.id', request()->supplier_id);
+            if (! empty(request()->unsupplier_ids)) {
+              $purchases->whereNotIn('contacts.id', request()->unsupplier_ids);
+            } else {
+              if (! empty(request()->supplier_id)) {
+                  $purchases->where('contacts.id', request()->supplier_id);
+              }
             }
             if (! empty(request()->location_id)) {
                 $purchases->where('transactions.location_id', request()->location_id);

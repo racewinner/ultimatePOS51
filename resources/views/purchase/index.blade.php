@@ -47,6 +47,12 @@
             {!! Form::text('purchase_list_filter_date_range', null, ['placeholder' => __('lang_v1.select_a_date_range'), 'class' => 'form-control', 'readonly']) !!}
         </div>
     </div>
+    <div class="col-md-9">
+        <div class="form-group">
+            {!! Form::label('purchase_list_filter_unsupplier_id', __('purchase.unsupplier') . ':') !!}
+            {!! Form::select('purchase_list_filter_unsupplier_id', $suppliers, null, ['multiple' => 'multiple', 'class' => 'form-control select2', 'style' => 'width:100%']) !!}
+        </div>
+    </div>
     @endcomponent
 
     @component('components.widget', ['class' => 'box-primary', 'title' => __('purchase.all_purchases')])

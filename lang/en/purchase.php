@@ -12,6 +12,7 @@ return [
     */
 
     'supplier' => 'Supplier',
+    'unsupplier' => 'Supplier (Exclusive)',
     'ref_no' => 'Reference No',
     'business_location' => 'Business Location',
     'purchases' => 'Purchases',

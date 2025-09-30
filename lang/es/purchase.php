@@ -2,6 +2,7 @@
 
  return [
      'supplier' => 'Proveedor',
+     'unsupplier' => 'Proveedor (Excluir)',
      'ref_no' => 'Numero de referencia',
      'business_location' => 'Ubicación de la empresa',
      'purchases' => 'Compras',
