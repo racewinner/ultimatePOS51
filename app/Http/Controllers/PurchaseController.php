@@ -735,7 +735,16 @@ class PurchaseController extends Controller
         $currencies = $this->transactionUtil->purchaseCurrencyDetails($business_id);
 
         if (request()->ajax()) {
-            $purchases = $this->transactionUtil->getListPurchases($business_id);
+            $purchases_org = $this->transactionUtil->getListPurchases($business_id);
+
+            $purchases_org = $purchases_org->get(); // or ->all()
+
+            // filter the all refunded purchases, added by Victor.C & Holla Ardy, 2025/10/05
+            $purchases = $purchases_org->filter(function ($row) {
+                $diffA = $row->final_total - $row->amount_paid;
+                $diffB = $row->amount_return - $row->return_paid;
+                return $diffA != $diffB;
+            })->values();
 
             // location condition
             $permitted_locations = auth()->user()->permitted_locations();
