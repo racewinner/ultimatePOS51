@@ -150,12 +150,15 @@
 						@endif
 					</td>
 					<td class="ws-nowrap text-center">
-						@if($data['credit'])
+						<!-- @if($data['credit'])
 						{{ \App\Utils\Util::format_currency($data['credit'], $business->currency) }}
 						@endif
 						@if($business->second_currency_id > 0 && $data['credit_currency2'])
 						{{ ($data['credit'] > 0) ? '/' : '' }}
 						{{ \App\Utils\Util::format_currency($data['credit_currency2'], $business->secondCurrency) }}
+						@endif -->
+            @if($data['credit'])
+						{{ \App\Utils\Util::format_currency($data['credit'], $data['currency']) }}
 						@endif
 					</td>
 					<td class="ws-nowrap text-center">
