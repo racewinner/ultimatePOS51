@@ -230,11 +230,22 @@ class PurchaseController extends Controller
                         </span></a>'
                 )
                 ->editColumn(
-                    'payment_status',
-                    function ($row) {
+                    'payment_status', function ($row) {
                         $payment_status = Transaction::getPaymentStatus($row);
+                        $itm_status = $payment_status;
 
-                        return (string) view('sell.partials.payment_status', ['payment_status' => $payment_status, 'id' => $row->id, 'for_purchase' => true]);
+                        $itm_final_total = $row->final_total;
+                        $itm_amount_paid = $row->amount_paid;
+                        $itm_amount_return = $row->amount_return;
+
+                        $a = floatval($itm_final_total);
+                        $b = floatval($itm_amount_return) + floatval($itm_amount_paid);
+                        if (round($a, 3) == round($b, 3)) {
+                            $itm_status = "paid";
+                        }
+
+                        // return (string) view('sell.partials.payment_status', ['payment_status' => $payment_status, 'id' => $row->id, 'for_purchase' => true]);
+                        return (string) view('sell.partials.payment_status', ['payment_status' => $itm_status, 'id' => $row->id, 'for_purchase' => true]);
                     }
                 )
                 ->addColumn('payment_due', function ($row) use($business) {
@@ -735,16 +746,7 @@ class PurchaseController extends Controller
         $currencies = $this->transactionUtil->purchaseCurrencyDetails($business_id);
 
         if (request()->ajax()) {
-            $purchases_org = $this->transactionUtil->getListPurchases($business_id);
-
-            $purchases_org = $purchases_org->get(); // or ->all()
-
-            // filter the all refunded purchases, added by Victor.C & Holla Ardy, 2025/10/05
-            $purchases = $purchases_org->filter(function ($row) {
-                $diffA = $row->final_total - $row->amount_paid;
-                $diffB = $row->amount_return - $row->return_paid;
-                return $diffA != $diffB;
-            })->values();
+            $purchases = $this->transactionUtil->getListPurchases($business_id);
 
             // location condition
             $permitted_locations = auth()->user()->permitted_locations();
@@ -779,10 +781,25 @@ class PurchaseController extends Controller
                 $start = request()->start_date;
                 $end = request()->end_date;
                 $purchases->whereDate('transactions.transaction_date', '>=', $start)
-                            ->whereDate('transactions.transaction_date', '<=', $end);
+                          ->whereDate('transactions.transaction_date', '<=', $end);
             }
 
             $purchases->groupBy('transactions.id');
+
+            // filter and remove the correct paid invoices, added by Victor.C & Holla Ardy, 2025/10/06
+            $purchases_org = $purchases->get(); // or ->all()
+            $purchases = $purchases_org->filter(function ($row) {
+                $itm_final_total = $row->final_total;
+                $itm_amount_paid = $row->amount_paid;
+                $itm_amount_return = $row->amount_return;
+
+                $a = floatval($itm_final_total);
+                $b = floatval($itm_amount_return) + floatval($itm_amount_paid);
+                if (/*$itm_amount_paid && */(round($a, 3) == round($b, 3))) {
+                    return false;
+                }
+                return true;
+            })->values();
 
             $datatable = Datatables::of($purchases)
                 ->addColumn(
@@ -836,7 +853,19 @@ class PurchaseController extends Controller
                 ->editColumn('transaction_date', '{{@format_datetime($transaction_date)}}')
                 ->editColumn('payment_status', function ($row) {
                         $payment_status = Transaction::getPaymentStatus($row);
-                        return (string) view('sell.partials.payment_status', ['payment_status' => $payment_status, 'id' => $row->id, 'for_purchase' => true]);
+                        $itm_status = $payment_status;
+
+                        $itm_final_total = $row->final_total;
+                        $itm_amount_paid = $row->amount_paid;
+                        $itm_amount_return = $row->amount_return;
+
+                        $a = floatval($itm_final_total);
+                        $b = floatval($itm_amount_return) + floatval($itm_amount_paid);
+                        if ($itm_amount_paid && (round($a, 3) == round($b, 3))) {
+                            $itm_status = "paid";
+                        }
+
+                        return (string) view('sell.partials.payment_status', ['payment_status' => $itm_status, 'id' => $row->id, 'for_purchase' => true]);
                     }
                 )
                 ->addColumn('payment_due', function ($row) use($business) {

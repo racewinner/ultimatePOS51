@@ -138,12 +138,15 @@
 					<!--<td class=''>{{$data['location']}}</td>-->
 					<td class='text-center'>{{$data['payment_status']}}</td>
 					<td class="ws-nowrap text-center">
-						@if($data['debit'] > 0)
+						<!-- @if($data['debit'] > 0)
 						{{ \App\Utils\Util::format_currency($data['debit'], $business->currency) }}
 						@endif
 						@if($business->second_currency_id > 0 && $data['debit_currency2'] > 0)
 						{{ ($data['debit'] > 0) ? '/' : '' }}
 						{{ \App\Utils\Util::format_currency($data['debit_currency2'], $business->secondCurrency) }}
+						@endif -->
+            @if($data['debit'] > 0)
+						{{ \App\Utils\Util::format_currency($data['debit'], $data['currency']) }}
 						@endif
 					</td>
 					<td class="ws-nowrap text-center">

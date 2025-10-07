@@ -121,8 +121,16 @@
 
                 $(document).off('click', 'button.add-multi-pay');
                 $(document).on('click', 'button.add-multi-pay', function (e) {
+                    debugger
                     const transaction_id = $(e.target).data("purchase-id");
                     const purchase_due_tr = e.target.closest('tr');
+
+                    // if clicked item is full-paid invoice one, refuse add action
+                    const payment_status = $(purchase_due_tr.querySelector("td:nth-child(6)")).children().eq(0).data('orig-value')
+                    if (payment_status == 'paid') {
+                        toastr.warning("Sorry, This is full-paid invoice item.");
+                        return;
+                    }
 
                     // To check currency is the same as the selected currency
                     const currency_symbol = $(purchase_due_tr.querySelector("td:nth-child(7)")).text();
@@ -181,10 +189,16 @@
                     if (!purchase_due) purchase_due = parseFloat($(td).find(".payment_due").data("orig-value-currency2"));
                     newTr.appendChild(td.cloneNode(true));
 
+                    // consider refund amount
+                    debugger
+                    const refund_amount = $(purchase_due_tr.querySelector("td:nth-child(11)")).text();
+                    const need_pay_amount = parseFloat(purchase_due ? purchase_due : 0) - parseFloat(refund_amount ? refund_amount : 0)
+
                     // pay amount
                     td = document.createElement("td");
                     html = "<div class='d-flex justify-content-center'>";
-                    html += `<input type='number' class='form-control pay-amount' data-purchase-id='${transaction_id}' data-sell-due='${purchase_due}' value='${purchase_due}'/>`;
+                    // html += `<input type='number' class='form-control pay-amount' data-purchase-id='${transaction_id}' data-sell-due='${purchase_due}' value='${purchase_due}'/>`;
+                    html += `<input type='number' class='form-control pay-amount' data-purchase-id='${transaction_id}' data-sell-due='${need_pay_amount.toFixed(2)}' value='${need_pay_amount.toFixed(2)}'/>`;
                     html += "</div>";
                     $(td).html(html);
                     newTr.appendChild(td);
