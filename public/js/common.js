@@ -412,6 +412,26 @@ var dateRangeSettings = {
         toLabel: '~',
     },
 };
+var dateRangeSettings1 = {
+    ranges: ranges,
+    /**
+     * this is about this 1 year
+     * startDate: financial_year.start,
+     * endDate: financial_year.end,
+     */
+    /**
+     * below is about last 3 months
+     */
+    startDate: moment().subtract(1, 'month').startOf('month'),
+    endDate: moment().endOf('month'),
+    locale: {
+        cancelLabel: LANG.clear,
+        applyLabel: LANG.apply,
+        customRangeLabel: LANG.custom_range,
+        format: moment_date_format,
+        toLabel: '~',
+    },
+};
 
 //Check for number string in input field, if data-decimal is 0 then don't allow decimal symbol
 $(document).on('keypress', 'input.input_number', function (event) {

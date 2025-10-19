@@ -67,7 +67,7 @@
 @section('javascript')
     <script type="text/javascript">
         $(document).ready(function () {
-            $('#al_date_filter').daterangepicker(dateRangeSettings, function (start, end) {
+            $('#al_date_filter').daterangepicker(dateRangeSettings1, function (start, end) {
                 $('#al_date_filter').val(
                     start.format(moment_date_format) + ' ~ ' + end.format(moment_date_format)
                 );
